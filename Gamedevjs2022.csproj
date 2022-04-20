@@ -1,0 +1,12 @@
+<Project Sdk="Godot.NET.Sdk/3.3.0">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <RootNamespace>Gamedevjs2022</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Rebex.Elliptic.Ed25519" Version="1.2.1" />
+    <PackageReference Include="SimpleBase" Version="2.1.0" />
+  </ItemGroup>
+</Project>

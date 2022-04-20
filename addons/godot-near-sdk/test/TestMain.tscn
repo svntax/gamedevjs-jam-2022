@@ -1,0 +1,165 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/godot-near-sdk/test/TestMain.gd" type="Script" id=1]
+[ext_resource path="res://addons/godot-near-sdk/utils/CryptoHelper.cs" type="Script" id=2]
+
+[node name="TestMain" type="Control"]
+script = ExtResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 216.0
+margin_top = 80.0
+margin_right = 704.0
+margin_bottom = 552.0
+rect_min_size = Vector2( 488, 472 )
+text = "Result string"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+margin_left = 40.0
+margin_top = 60.0
+margin_right = 192.0
+margin_bottom = 112.0
+text = "View call"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ClearButton" type="Button" parent="."]
+margin_left = 232.0
+margin_top = 40.0
+margin_right = 276.0
+margin_bottom = 60.0
+text = "Clear"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CryptoHelperTest" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="InvalidMethodButton" type="Button" parent="."]
+margin_left = 40.0
+margin_top = 128.0
+margin_right = 192.0
+margin_bottom = 176.0
+text = "Invalid method call"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InvalidAccountButton" type="Button" parent="."]
+margin_left = 40.0
+margin_top = 192.0
+margin_right = 192.0
+margin_bottom = 240.0
+text = "Invalid account call"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LoginButton" type="Button" parent="."]
+margin_left = 408.0
+margin_top = 24.0
+margin_right = 496.0
+margin_bottom = 56.0
+text = "Sign In"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UserLabel" type="Label" parent="."]
+margin_left = 520.0
+margin_top = 24.0
+margin_right = 768.0
+margin_bottom = 60.0
+text = "Not signed in"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ReadMessageButton" type="Button" parent="."]
+margin_left = 40.0
+margin_top = 256.0
+margin_right = 192.0
+margin_bottom = 304.0
+text = "View Message"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChangeMessageButton" type="Button" parent="."]
+margin_left = 40.0
+margin_top = 320.0
+margin_right = 192.0
+margin_bottom = 352.0
+text = "Change Message"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MessageInput" type="LineEdit" parent="."]
+margin_left = 40.0
+margin_top = 360.0
+margin_right = 192.0
+margin_bottom = 384.0
+text = "Message here..."
+max_length = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BlockButton" type="Button" parent="."]
+margin_left = 40.0
+margin_top = 480.0
+margin_right = 192.0
+margin_bottom = 520.0
+text = "Get latest block"
+
+[node name="ViewAccessKeyButton" type="Button" parent="."]
+margin_left = 40.0
+margin_top = 536.0
+margin_right = 192.0
+margin_bottom = 576.0
+text = "View access key"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DonationSlider" type="HSlider" parent="."]
+margin_left = 40.0
+margin_top = 432.0
+margin_right = 192.0
+margin_bottom = 448.0
+rect_min_size = Vector2( 152, 16 )
+max_value = 1.0
+step = 0.01
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DonationLabel" type="Label" parent="."]
+margin_left = 40.0
+margin_top = 400.0
+margin_right = 192.0
+margin_bottom = 432.0
+rect_min_size = Vector2( 152, 32 )
+text = "Donation
+(NEAR): 0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="ClearButton" to="." method="_on_ClearButton_pressed"]
+[connection signal="pressed" from="InvalidMethodButton" to="." method="_on_InvalidMethodButton_pressed"]
+[connection signal="pressed" from="InvalidAccountButton" to="." method="_on_InvalidAccountButton_pressed"]
+[connection signal="pressed" from="LoginButton" to="." method="_on_LoginButton_pressed"]
+[connection signal="pressed" from="ReadMessageButton" to="." method="_on_ReadMessageButton_pressed"]
+[connection signal="pressed" from="ChangeMessageButton" to="." method="_on_ChangeMessageButton_pressed"]
+[connection signal="pressed" from="BlockButton" to="." method="_on_BlockButton_pressed"]
+[connection signal="pressed" from="ViewAccessKeyButton" to="." method="_on_ViewAccessKeyButton_pressed"]
+[connection signal="value_changed" from="DonationSlider" to="." method="_on_DonationSlider_value_changed"]
