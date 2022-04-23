@@ -20,3 +20,10 @@ limit_bottom = 144
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 editor_draw_drag_margin = true
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="Score" type="Label" parent="UILayer"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Score: 0"

@@ -2,6 +2,7 @@ extends KinematicBody2D
 class_name Player
 
 signal mine(target_pos)
+signal collected_ore()
 
 onready var speed = 56
 onready var x_direction = 0 # 1 = right, -1 = left
@@ -42,3 +43,16 @@ func _process(delta):
 func _on_MoveCooldown_timeout():
 	# Unused for now
 	pass
+
+func collect(ore) -> void:
+	if ore.ore_type == Globals.ORE_TYPE.Gold:
+		Globals.current_score += 10
+	elif ore.ore_type == Globals.ORE_TYPE.Iron:
+		pass # TODO: Should iron give score? Repair pickaxe?
+	elif ore.ore_type == Globals.ORE_TYPE.Emerald:
+		Globals.current_score += 200
+	elif ore.ore_type == Globals.ORE_TYPE.Ruby:
+		Globals.current_score += 500
+	elif ore.ore_type == Globals.ORE_TYPE.Sapphire:
+		Globals.current_score += 1000
+	emit_signal("collected_ore")

@@ -40,6 +40,7 @@ config/icon="res://icon.png"
 
 Near="*res://addons/godot-near-sdk/Near.tscn"
 CryptoProxy="*res://addons/godot-near-sdk/utils/CryptoProxy.gd"
+Globals="*res://Globals.gd"
 
 [display]
 
@@ -85,6 +86,7 @@ main_action={
 
 2d_physics/layer_1="SOLID"
 2d_physics/layer_2="PLAYER"
+2d_physics/layer_3="ORES"
 
 [physics]
 
