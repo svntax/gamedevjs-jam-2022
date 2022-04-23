@@ -39,6 +39,9 @@ func _process(delta):
 		animation_player.play("mine")
 		move_cooldown_timer.start()
 		emit_signal("mine", mine_pos)
+	# TODO: debug, remove later
+	if Input.is_action_just_pressed("ui_select"):
+		get_parent().get_node("Cave").generate_cave()
 
 func _on_MoveCooldown_timeout():
 	# Unused for now
@@ -50,9 +53,9 @@ func collect(ore) -> void:
 	elif ore.ore_type == Globals.ORE_TYPE.Iron:
 		pass # TODO: Should iron give score? Repair pickaxe?
 	elif ore.ore_type == Globals.ORE_TYPE.Emerald:
-		Globals.current_score += 200
+		Globals.current_score += 100
 	elif ore.ore_type == Globals.ORE_TYPE.Ruby:
-		Globals.current_score += 500
+		Globals.current_score += 250
 	elif ore.ore_type == Globals.ORE_TYPE.Sapphire:
 		Globals.current_score += 1000
 	emit_signal("collected_ore")

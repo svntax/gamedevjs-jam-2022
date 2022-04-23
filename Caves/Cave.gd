@@ -1,5 +1,7 @@
 extends Node2D
 
+export (int, 0, 5000) var cave_width = 64
+
 var GoldOre = load("res://Ores/Gold.tscn")
 var IronOre = load("res://Ores/Iron.tscn")
 var EmeraldOre = load("res://Ores/Emerald.tscn")
@@ -7,6 +9,7 @@ var RubyOre = load("res://Ores/Ruby.tscn")
 var SapphireOre = load("res://Ores/Sapphire.tscn")
 
 onready var tiles_id = {
+	"wall": -1,
 	"dirt": -1, "dirt_broken": -1,
 	"stone01": -1,
 	"stone02": -1,
@@ -18,6 +21,8 @@ onready var tiles_id = {
 	"sapphire01": -1
 }
 
+var random = RandomNumberGenerator.new()
+
 onready var tilemap = $TileMap
 
 func _ready():
@@ -28,6 +33,73 @@ func _ready():
 	for key in tiles_id.keys():
 		tiles_id[key] = tilemap.tile_set.find_tile_by_name(key)
 		assert(tiles_id[key] != -1)
+	
+	generate_cave()
+
+func generate_cave() -> void:
+	tilemap.clear()
+	random.randomize()
+	print("Generating cave with seed: " + str(random.seed))
+	for x in range(cave_width):
+		for y in range(9):
+			# Left-most wall
+			if x == 0:
+				tilemap.set_cell(x, y, tiles_id["wall"])
+				continue
+			# Top and bottom walls
+			if y == 0 or y == 8:
+				# Walls
+				tilemap.set_cell(x, y, tiles_id["wall"])
+			# Actual cave generation
+			else:
+				# Starting area is all ground
+				if 1 <= x and x <= 10:
+					tilemap.set_cell(x, y, tiles_id["ground"])
+					continue
+				# First layer: dirt, stone, gold, iron
+				var choice = random.randf()
+				if 11 <= x and x <= 20:
+					if choice <= 0.8:
+						tilemap.set_cell(x, y, tiles_id["dirt"])
+					elif choice <= 0.9:
+						place_gold_at(x, y)
+					elif choice <= 0.95:
+						tilemap.set_cell(x, y, tiles_id["ground"])
+					elif choice <= 0.98:
+						place_iron_at(x, y)
+					else:
+						place_stone_at(x, y)
+				# Second layer: dirt, stone, gold, iron, emerald
+				elif 21 <= x and x <= 60: # TODO: testing layers, change distribution later
+					if choice <= 0.75:
+						tilemap.set_cell(x, y, tiles_id["dirt"])
+					elif choice <= 0.8:
+						place_stone_at(x, y)
+					elif choice <= 0.9:
+						place_gold_at(x, y)
+					elif choice <= 0.93:
+						place_emerald_at(x, y)
+					elif choice <= 0.96:
+						place_iron_at(x, y)
+					else:
+						tilemap.set_cell(x, y, tiles_id["ground"])
+
+# Helper functions for placing tiles
+func place_gold_at(x: int, y: int) -> void:
+	var tile_id = tiles_id["gold0" + str(random.randi() % 3 + 1)]
+	tilemap.set_cell(x, y, tile_id)
+
+func place_stone_at(x: int, y: int) -> void:
+	var tile_id = tiles_id["stone0" + str(random.randi() % 2 + 1)]
+	tilemap.set_cell(x, y, tile_id)
+
+func place_iron_at(x: int, y: int) -> void:
+	var tile_id = tiles_id["iron0" + str(random.randi() % 2 + 1)]
+	tilemap.set_cell(x, y, tile_id)
+
+func place_emerald_at(x: int, y: int) -> void:
+	var tile_id = tiles_id["emerald0" + str(random.randi() % 2 + 1)]
+	tilemap.set_cell(x, y, tile_id)
 
 func mine_at_position(pos: Vector2) -> void:
 	var cell_pos = tilemap.world_to_map(pos)
