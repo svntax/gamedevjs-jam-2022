@@ -83,6 +83,54 @@ func generate_cave() -> void:
 						place_iron_at(x, y)
 					else:
 						tilemap.set_cell(x, y, tiles_id["ground"])
+				# Third layer: dirt, stone, gold, iron, emerald, ruby
+				elif 61 <= x and x <= 80:
+					if choice <= 0.65:
+						tilemap.set_cell(x, y, tiles_id["dirt"])
+					elif choice <= 0.8:
+						place_stone_at(x, y)
+					elif choice <= 0.85:
+						place_gold_at(x, y)
+					elif choice <= 0.9:
+						place_emerald_at(x, y)
+					elif choice <= 0.93:
+						place_ruby_at(x, y)
+					elif choice <= 0.96:
+						place_iron_at(x, y)
+					else:
+						tilemap.set_cell(x, y, tiles_id["ground"])
+				# Fourth layer: all tile types
+				elif 81 <= x and x <= 100:
+					if choice <= 0.05:
+						tilemap.set_cell(x, y, tiles_id["sapphire01"])
+					elif choice <= 0.6:
+						tilemap.set_cell(x, y, tiles_id["dirt"])
+					elif choice <= 0.75:
+						place_stone_at(x, y)
+					elif choice <= 0.78:
+						place_gold_at(x, y)
+					elif choice <= 0.9:
+						place_emerald_at(x, y)
+					elif choice <= 0.95:
+						place_ruby_at(x, y)
+					elif choice <= 0.98:
+						place_iron_at(x, y)
+					else:
+						tilemap.set_cell(x, y, tiles_id["ground"])
+				# Final layer: mainly rarer ores
+				else:
+					if choice <= 0.5:
+						tilemap.set_cell(x, y, tiles_id["dirt"])
+					elif choice <= 0.7:
+						place_stone_at(x, y)
+					elif choice <= 0.9:
+						tilemap.set_cell(x, y, tiles_id["sapphire01"])
+					elif choice <= 0.95:
+						place_ruby_at(x, y)
+					elif choice <= 0.98:
+						place_gold_at(x, y)
+					else:
+						tilemap.set_cell(x, y, tiles_id["ground"])
 
 # Helper functions for placing tiles
 func place_gold_at(x: int, y: int) -> void:
@@ -99,6 +147,10 @@ func place_iron_at(x: int, y: int) -> void:
 
 func place_emerald_at(x: int, y: int) -> void:
 	var tile_id = tiles_id["emerald0" + str(random.randi() % 2 + 1)]
+	tilemap.set_cell(x, y, tile_id)
+
+func place_ruby_at(x: int, y: int) -> void:
+	var tile_id = tiles_id["ruby0" + str(random.randi() % 2 + 1)]
 	tilemap.set_cell(x, y, tile_id)
 
 func mine_at_position(pos: Vector2) -> void:
