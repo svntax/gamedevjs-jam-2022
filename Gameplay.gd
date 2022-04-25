@@ -2,8 +2,10 @@ extends Node2D
 
 onready var player = $Player
 onready var score_label = $UILayer/Score
+onready var cave_music = $CaveMusic
 
 func _ready():
+	cave_music.play()
 	player.connect("collected_ore", self, "update_score")
 
 # Sets the text label to the current score in Globals
