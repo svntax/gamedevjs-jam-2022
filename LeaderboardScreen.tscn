@@ -78,11 +78,10 @@ text = "12345"
 align = 2
 
 [node name="MessageLabel" type="Label" parent="Control"]
-visible = false
 margin_top = 64.0
 margin_right = 256.0
 margin_bottom = 91.0
-text = "No high scores submitted yet."
+text = "Loading..."
 align = 1
 
 [connection signal="pressed" from="Control/BackButton" to="." method="_on_BackButton_pressed"]

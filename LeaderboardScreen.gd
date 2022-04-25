@@ -18,6 +18,7 @@ func _ready():
 		message_label.set_text("Error: Failed to get high scores")
 		message_label.show()
 	else:
+		message_label.hide()
 		var data = result.data
 		var json_data = JSON.parse(data)
 		var high_scores: Array = json_data.result
