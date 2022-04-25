@@ -1,0 +1,88 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://m5x7.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://LeaderboardScreen.gd" type="Script" id=2]
+[ext_resource path="res://ui_theme.tres" type="Theme" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[node name="LeaderboardScreen" type="Node2D"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Control" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+theme = ExtResource( 3 )
+
+[node name="Bg" type="ColorRect" parent="Control"]
+margin_left = -8.0
+margin_top = -8.0
+margin_right = 264.0
+margin_bottom = 152.0
+color = Color( 0.258824, 0.129412, 0.211765, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Title" type="Label" parent="Control"]
+margin_left = 64.0
+margin_top = 8.0
+margin_right = 192.0
+margin_bottom = 40.0
+custom_fonts/font = SubResource( 1 )
+text = "LEADERBOARDS"
+align = 1
+
+[node name="BackButton" type="Button" parent="Control"]
+margin_left = 80.0
+margin_top = 120.0
+margin_right = 168.0
+margin_bottom = 138.0
+rect_min_size = Vector2( 88, 18 )
+custom_styles/disabled = SubResource( 2 )
+text = "Back"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control"]
+margin_left = 16.0
+margin_top = 24.0
+margin_right = 240.0
+margin_bottom = 112.0
+rect_min_size = Vector2( 224, 88 )
+scroll_horizontal_enabled = false
+
+[node name="ScoresGrid" type="GridContainer" parent="Control/ScrollContainer"]
+margin_right = 224.0
+margin_bottom = 13.0
+size_flags_horizontal = 3
+custom_constants/vseparation = 8
+columns = 2
+
+[node name="PlayerName" type="Label" parent="Control/ScrollContainer/ScoresGrid"]
+margin_right = 110.0
+margin_bottom = 13.0
+size_flags_horizontal = 3
+text = "Username 1"
+
+[node name="PlayerScore" type="Label" parent="Control/ScrollContainer/ScoresGrid"]
+margin_left = 114.0
+margin_right = 224.0
+margin_bottom = 13.0
+size_flags_horizontal = 3
+text = "12345"
+align = 2
+
+[node name="MessageLabel" type="Label" parent="Control"]
+visible = false
+margin_top = 64.0
+margin_right = 256.0
+margin_bottom = 91.0
+text = "No high scores submitted yet."
+align = 1
+
+[connection signal="pressed" from="Control/BackButton" to="." method="_on_BackButton_pressed"]

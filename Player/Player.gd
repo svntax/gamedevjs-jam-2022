@@ -40,7 +40,7 @@ func _process(delta):
 		move_cooldown_timer.start()
 		emit_signal("mine", mine_pos)
 	# TODO: debug, remove later
-	if Input.is_action_just_pressed("ui_select"):
+	if Input.is_action_just_pressed("ui_focus_next"):
 		get_parent().get_node("Cave").generate_cave()
 
 func _on_MoveCooldown_timeout():

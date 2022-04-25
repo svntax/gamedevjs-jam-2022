@@ -1,0 +1,83 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://m5x7.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://TitleScreen.gd" type="Script" id=2]
+[ext_resource path="res://ui_theme.tres" type="Theme" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 1 )
+
+[node name="TitleScreen" type="Node2D"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Bg" type="ColorRect" parent="."]
+margin_left = -8.0
+margin_top = -8.0
+margin_right = 264.0
+margin_bottom = 152.0
+color = Color( 0.258824, 0.129412, 0.211765, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Title" type="Label" parent="."]
+margin_left = 64.0
+margin_top = 12.0
+margin_right = 192.0
+margin_bottom = 44.0
+custom_fonts/font = SubResource( 1 )
+text = "Title"
+align = 1
+
+[node name="LoginButton" type="Button" parent="."]
+margin_left = 190.0
+margin_top = 122.0
+margin_right = 254.0
+margin_bottom = 142.0
+rect_min_size = Vector2( 0, 18 )
+focus_neighbour_top = NodePath("../Menu/LeaderboardsButton")
+theme = ExtResource( 3 )
+text = "Sign In"
+
+[node name="Menu" type="VBoxContainer" parent="."]
+margin_left = 80.0
+margin_top = 64.0
+margin_right = 176.0
+margin_bottom = 134.0
+theme = ExtResource( 3 )
+custom_constants/separation = 4
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="Menu"]
+margin_top = 4.0
+margin_right = 96.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 80, 18 )
+focus_neighbour_bottom = NodePath("../ChallengeButton")
+text = "Play"
+
+[node name="ChallengeButton" type="Button" parent="Menu"]
+margin_top = 26.0
+margin_right = 96.0
+margin_bottom = 44.0
+rect_min_size = Vector2( 88, 18 )
+focus_neighbour_top = NodePath("../PlayButton")
+focus_neighbour_bottom = NodePath("../LeaderboardsButton")
+text = "Challenge"
+
+[node name="LeaderboardsButton" type="Button" parent="Menu"]
+margin_top = 48.0
+margin_right = 96.0
+margin_bottom = 66.0
+rect_min_size = Vector2( 80, 18 )
+focus_neighbour_top = NodePath("../ChallengeButton")
+focus_neighbour_bottom = NodePath("../../LoginButton")
+text = "Leaderboards"
+
+[connection signal="pressed" from="LoginButton" to="." method="_on_LoginButton_pressed"]
+[connection signal="pressed" from="Menu/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="Menu/ChallengeButton" to="." method="_on_ChallengeButton_pressed"]
+[connection signal="pressed" from="Menu/LeaderboardsButton" to="." method="_on_LeaderboardsButton_pressed"]
