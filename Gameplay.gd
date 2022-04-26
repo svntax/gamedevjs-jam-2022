@@ -50,6 +50,9 @@ func update_score() -> void:
 func _on_player_death():
 	game_over_delay_timer.start()
 	game_over_menu.set_score(Globals.current_score)
+	if Globals.challenge_mode and wallet_connection.is_signed_in():
+		var args = {"new_score": Globals.current_score}
+		wallet_connection.call_change_method(Globals.CONTRACT_NAME, "submit_score", args)
 
 func _on_GameOverDelay_timeout():
 	animation_player.play("game_over")
