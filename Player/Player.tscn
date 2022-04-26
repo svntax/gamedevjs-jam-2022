@@ -58,7 +58,7 @@ anims/RESET = SubResource( 2 )
 anims/mine = SubResource( 3 )
 
 [node name="MoveCooldownTimer" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.25
 one_shot = true
 
 [connection signal="timeout" from="MoveCooldownTimer" to="." method="_on_MoveCooldown_timeout"]

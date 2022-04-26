@@ -1,6 +1,6 @@
 extends Area2D
 
-export (Globals.ORE_TYPE) var ore_type = Globals.ORE_TYPE.Gold
+export (Globals.OreType) var ore_type = Globals.OreType.GOLD
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

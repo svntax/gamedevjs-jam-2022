@@ -1,6 +1,6 @@
 extends Node
 
-enum ORE_TYPE {Gold, Iron, Emerald, Ruby, Sapphire}
+enum OreType {GOLD, IRON, EMERALD, RUBY, SAPPHIRE}
 
 const CONTRACT_NAME = "dev-1650872996541-87072547500083"
 

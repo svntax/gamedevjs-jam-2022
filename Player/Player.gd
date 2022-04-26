@@ -54,6 +54,8 @@ func _process(_delta):
 			emit_signal("mine", mine_pos)
 	# TODO: debug, remove later
 	if Input.is_action_just_pressed("ui_focus_next"):
+		for golem in get_tree().get_nodes_in_group("Golems"):
+			golem.queue_free()
 		get_parent().get_node("Cave").generate_cave()
 	if Input.is_action_just_pressed("debug_toggle"):
 		collision_layer = 0
@@ -73,14 +75,14 @@ func is_alive() -> bool:
 	return alive
 
 func collect(ore) -> void:
-	if ore.ore_type == Globals.ORE_TYPE.Gold:
+	if ore.ore_type == Globals.OreType.GOLD:
 		Globals.current_score += 10
-	elif ore.ore_type == Globals.ORE_TYPE.Iron:
+	elif ore.ore_type == Globals.OreType.IRON:
 		pass # TODO: Should iron give score? Repair pickaxe?
-	elif ore.ore_type == Globals.ORE_TYPE.Emerald:
+	elif ore.ore_type == Globals.OreType.EMERALD:
 		Globals.current_score += 100
-	elif ore.ore_type == Globals.ORE_TYPE.Ruby:
+	elif ore.ore_type == Globals.OreType.RUBY:
 		Globals.current_score += 250
-	elif ore.ore_type == Globals.ORE_TYPE.Sapphire:
+	elif ore.ore_type == Globals.OreType.SAPPHIRE:
 		Globals.current_score += 1000
 	emit_signal("collected_ore")

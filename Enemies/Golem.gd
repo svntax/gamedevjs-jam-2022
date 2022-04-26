@@ -15,8 +15,7 @@ onready var detect_area = $PlayerDetectArea
 onready var damage_immunity_timer = $DamageImmunity
 onready var mine_timer = $MineTimer
 
-enum GolemType {RUBY}
-onready var golem_type = GolemType.RUBY
+onready var golem_type = Globals.OreType.RUBY
 
 onready var player = null
 onready var speed = 24
@@ -25,6 +24,8 @@ onready var velocity = Vector2()
 
 func _ready():
 	player = get_tree().get_nodes_in_group("Players")[0]
+	if randf() < 0.5:
+		body_root.scale.x = -1
 
 func _on_PlayerDetectArea_body_entered(body):
 	if body == player:
@@ -61,7 +62,7 @@ func damage() -> void:
 			state_machine.set_state(state_machine.States.HURT)
 
 func drop_loot() -> void:
-	if golem_type == GolemType.RUBY:
+	if golem_type == Globals.OreType.RUBY:
 		# Drop 2 ruby ores to the left and right
 		var ore01 = RubyOre.instance()
 		ore01.global_position = global_position + Vector2(randi() % 4 - 3, randi() % 5 - 2)

@@ -7,6 +7,7 @@ const IronOre = preload("res://Ores/Iron.tscn")
 const EmeraldOre = preload("res://Ores/Emerald.tscn")
 const RubyOre = preload("res://Ores/Ruby.tscn")
 const SapphireOre = preload("res://Ores/Sapphire.tscn")
+const Golem = preload("res://Enemies/Golem.tscn")
 
 onready var tiles_id = {
 	"wall": -1,
@@ -56,13 +57,23 @@ func generate_cave() -> void:
 			# Actual cave generation
 			else:
 				# Starting area is all ground
-				if 1 <= x and x <= 10:
+				if 1 <= x and x <= 7:
 					tilemap.set_cell(x, y, tiles_id["ground"])
+					continue
+				elif 8 <= x and x <= 10:
+					var choice = random.randf()
+					if choice < 0.3:
+						tilemap.set_cell(x, y, tiles_id["ground"])
+					else:
+						tilemap.set_cell(x, y, tiles_id["dirt"])
 					continue
 				# First layer: dirt, stone, gold, iron
 				var choice = random.randf()
 				if 11 <= x and x <= 20:
-					if choice <= 0.8:
+					if choice <= 0.01: # Spawn golem
+						tilemap.set_cell(x, y, tiles_id["ground"])
+						place_golem_at(x, y, Globals.OreType.RUBY)
+					elif choice <= 0.8:
 						tilemap.set_cell(x, y, tiles_id["dirt"])
 					elif choice <= 0.9:
 						place_gold_at(x, y)
@@ -73,8 +84,11 @@ func generate_cave() -> void:
 					else:
 						place_stone_at(x, y)
 				# Second layer: dirt, stone, gold, iron, emerald
-				elif 21 <= x and x <= 60: # TODO: testing layers, change distribution later
-					if choice <= 0.75:
+				elif 21 <= x and x <= 60:
+					if choice <= 0.02:
+						tilemap.set_cell(x, y, tiles_id["ground"])
+						place_golem_at(x, y, Globals.OreType.RUBY)
+					elif choice <= 0.75:
 						tilemap.set_cell(x, y, tiles_id["dirt"])
 					elif choice <= 0.8:
 						place_stone_at(x, y)
@@ -88,7 +102,10 @@ func generate_cave() -> void:
 						tilemap.set_cell(x, y, tiles_id["ground"])
 				# Third layer: dirt, stone, gold, iron, emerald, ruby
 				elif 61 <= x and x <= 80:
-					if choice <= 0.65:
+					if choice <= 0.02:
+						tilemap.set_cell(x, y, tiles_id["ground"])
+						place_golem_at(x, y, Globals.OreType.RUBY)
+					elif choice <= 0.65:
 						tilemap.set_cell(x, y, tiles_id["dirt"])
 					elif choice <= 0.8:
 						place_stone_at(x, y)
@@ -104,10 +121,13 @@ func generate_cave() -> void:
 						tilemap.set_cell(x, y, tiles_id["ground"])
 				# Fourth layer: all tile types
 				elif 81 <= x and x <= 100:
-					if choice <= 0.05:
+					if choice <= 0.03:
 						tilemap.set_cell(x, y, tiles_id["sapphire01"])
 					elif choice <= 0.6:
 						tilemap.set_cell(x, y, tiles_id["dirt"])
+					elif choice <= 0.63:
+						tilemap.set_cell(x, y, tiles_id["ground"])
+						place_golem_at(x, y, Globals.OreType.RUBY)
 					elif choice <= 0.75:
 						place_stone_at(x, y)
 					elif choice <= 0.78:
@@ -122,7 +142,10 @@ func generate_cave() -> void:
 						tilemap.set_cell(x, y, tiles_id["ground"])
 				# Final layer: mainly rarer ores
 				else:
-					if choice <= 0.5:
+					if choice <= 0.05:
+						tilemap.set_cell(x, y, tiles_id["ground"])
+						place_golem_at(x, y, Globals.OreType.RUBY)
+					elif choice <= 0.5:
 						tilemap.set_cell(x, y, tiles_id["dirt"])
 					elif choice <= 0.7:
 						place_stone_at(x, y)
@@ -155,6 +178,15 @@ func place_emerald_at(x: int, y: int) -> void:
 func place_ruby_at(x: int, y: int) -> void:
 	var tile_id = tiles_id["ruby0" + str(random.randi() % 2 + 1)]
 	tilemap.set_cell(x, y, tile_id)
+
+func place_golem_at(cell_x: int, cell_y: int, golem_ore_type = Globals.OreType.RUBY) -> void:
+	var local_pos = tilemap.map_to_world(Vector2(cell_x, cell_y))
+	var spawn_pos = tilemap.to_global(local_pos)
+	var golem = Golem.instance()
+	golem.golem_type = golem_ore_type
+	golem.global_position = spawn_pos + Vector2(tilemap.cell_size.x / 2, tilemap.cell_size.y / 2)
+	add_child(golem)
+	golem.connect("mine", self, "mine_at_position")
 
 func mine_at_position(pos: Vector2) -> void:
 	var cell_pos = tilemap.world_to_map(pos)
