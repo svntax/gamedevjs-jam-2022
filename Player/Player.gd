@@ -89,6 +89,9 @@ func _on_MoveCooldown_timeout():
 	# Unused for now
 	pass
 
+func equip_golden_pickaxe() -> void:
+	pickaxe.turn_into_golden()
+
 func damage() -> void:
 	if alive:
 		alive = false
@@ -104,7 +107,7 @@ func collect(ore) -> void:
 	if ore.ore_type == Globals.OreType.GOLD:
 		Globals.current_score += 10
 	elif ore.ore_type == Globals.OreType.IRON:
-		pass # TODO: Should iron give score? Repair pickaxe?
+		Globals.current_score += 50 # TODO: Should iron give score? Repair pickaxe?
 	elif ore.ore_type == Globals.OreType.EMERALD:
 		Globals.current_score += 100
 	elif ore.ore_type == Globals.OreType.RUBY:

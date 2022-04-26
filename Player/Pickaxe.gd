@@ -2,6 +2,7 @@ extends Area2D
 
 onready var sprite = $PickaxeSprite
 onready var animation_player = $AnimationPlayer
+onready var costume_player = $CostumePlayer
 
 func hit() -> void:
 	animation_player.play("mine")
@@ -16,3 +17,6 @@ func face_right() -> void:
 
 func face_left() -> void:
 	sprite.flip_h = true
+
+func turn_into_golden() -> void:
+	costume_player.play("golden")

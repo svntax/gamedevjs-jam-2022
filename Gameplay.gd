@@ -8,6 +8,8 @@ onready var animation_player = $AnimationPlayer
 onready var game_over_menu = $UILayer/GameOverMenu
 onready var game_over_delay_timer = $GameOverDelay
 
+var wallet_connection
+
 func _ready():
 	Globals.current_score = 0
 	animation_player.play("RESET")
@@ -15,6 +17,31 @@ func _ready():
 	player.connect("collected_ore", self, "update_score")
 	player.connect("died", self, "_on_player_death")
 	cave.generate_cave()
+	
+	wallet_connection = WalletConnection.new(Near.near_connection)
+	if wallet_connection.is_signed_in():
+		# Check for golden pickaxe ownership
+		var nft_contract = "svntaxalt.testnet"
+		var args = {"account_id": wallet_connection.get_account_id()}
+		var result = Near.call_view_method(nft_contract, "nft_tokens_for_owner", args)
+		if result is GDScriptFunctionState:
+			result = yield(result, "completed")
+		if result.has("error"):
+			print("Error when fetching user's NFT's")
+		else:
+			var data = result.data
+			var json_data = JSON.parse(data)
+			var nft_list: Array = json_data.result
+			if nft_list.empty():
+				print("No NFT's found")
+			for nft in nft_list:
+				if nft["token_id"].begins_with("10:"):
+					var id_array = nft["token_id"].split(":")
+					if id_array.size() == 2:
+						var edition = int(id_array[1])
+						if 1 <= edition and edition <= 10:
+							player.equip_golden_pickaxe()
+							break
 
 # Sets the text label to the current score in Globals
 func update_score() -> void:
