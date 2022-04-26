@@ -96,7 +96,7 @@ script = ExtResource( 2 )
 cave_width = 150
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 65, 57 )
+position = Vector2( 65, 72 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true
