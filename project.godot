@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Golem",
+"language": "GDScript",
+"path": "res://Enemies/Golem.gd"
+}, {
 "base": "Reference",
 "class": "NearConnection",
 "language": "GDScript",
@@ -25,6 +30,7 @@ _global_script_classes=[ {
 "path": "res://addons/godot-near-sdk/WalletConnection.gd"
 } ]
 _global_script_class_icons={
+"Golem": "",
 "NearConnection": "",
 "Player": "",
 "WalletConnection": ""

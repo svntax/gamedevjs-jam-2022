@@ -1,7 +1,7 @@
 extends KinematicBody2D
 class_name Player
 
-signal mine(target_pos)
+signal mine(target_pos, source)
 signal collected_ore()
 
 onready var speed = 56
@@ -14,6 +14,8 @@ onready var pickaxe = $Pickaxe
 onready var sprite = $Sprite
 onready var animation_player = $AnimationPlayer
 onready var move_cooldown_timer = $MoveCooldownTimer
+onready var collect_sound = $CollectSound
+onready var death_sound = $DeadSound
 
 func _ready():
 	pickaxe.hide()
@@ -57,7 +59,7 @@ func _process(_delta):
 			elif sprite.scale.x == -1:
 				pickaxe.face_left()
 			pickaxe.hit()
-			emit_signal("mine", mine_pos)
+			emit_signal("mine", mine_pos, self)
 	# TODO: debug, remove later
 	if Input.is_action_just_pressed("ui_focus_next"):
 		for golem in get_tree().get_nodes_in_group("Golems"):
@@ -76,6 +78,7 @@ func damage() -> void:
 	alive = false
 	set_deferred("collision_layer", 0)
 	hide()
+	death_sound.play()
 
 func is_alive() -> bool:
 	return alive
@@ -91,4 +94,5 @@ func collect(ore) -> void:
 		Globals.current_score += 250
 	elif ore.ore_type == Globals.OreType.SAPPHIRE:
 		Globals.current_score += 1000
+	collect_sound.play()
 	emit_signal("collected_ore")

@@ -1,4 +1,5 @@
 extends KinematicBody2D
+class_name Golem
 
 #const GoldOre = preload("res://Ores/Gold.tscn")
 #const IronOre = preload("res://Ores/Iron.tscn")
@@ -15,6 +16,7 @@ onready var detect_area = $PlayerDetectArea
 onready var damage_immunity_timer = $DamageImmunity
 onready var mine_timer = $MineTimer
 onready var costume_player = $CostumePlayer
+onready var hurt_sound = $HurtSound
 
 onready var golem_type = Globals.OreType.RUBY
 
@@ -56,11 +58,17 @@ func damage() -> void:
 	if damage_immunity_timer.is_stopped():
 		damage_immunity_timer.start()
 		health -= 1
+		hurt_sound.play()
 		if health == 0:
 			drop_loot()
-			queue_free()
+			state_machine.set_state(state_machine.States.DEAD)
 		else:
 			state_machine.set_state(state_machine.States.HURT)
+
+func die() -> void:
+	hide()
+	set_deferred("collision_layer", 0)
+	set_deferred("collision_mask", 0)
 
 func set_ore_type(ore_type: int) -> void:
 	golem_type = ore_type
@@ -115,4 +123,8 @@ func mine() -> void:
 	else:
 		mine_dir.y = velocity.y
 	var mine_pos = global_position + mine_dir.normalized() * 16
-	emit_signal("mine", mine_pos)
+	emit_signal("mine", mine_pos, self)
+
+func _on_HurtSound_finished():
+	if health <= 0:
+		queue_free()

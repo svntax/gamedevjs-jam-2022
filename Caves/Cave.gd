@@ -7,7 +7,7 @@ const IronOre = preload("res://Ores/Iron.tscn")
 const EmeraldOre = preload("res://Ores/Emerald.tscn")
 const RubyOre = preload("res://Ores/Ruby.tscn")
 const SapphireOre = preload("res://Ores/Sapphire.tscn")
-const Golem = preload("res://Enemies/Golem.tscn")
+const GolemScene = preload("res://Enemies/Golem.tscn")
 
 onready var tiles_id = {
 	"wall": -1,
@@ -25,6 +25,8 @@ onready var tiles_id = {
 var random = RandomNumberGenerator.new()
 
 onready var tilemap = $TileMap
+onready var player_mine_sound = $PlayerMineSound
+onready var golem_mine_sound = $GolemMineSound
 
 func _ready():
 	var player = get_tree().get_nodes_in_group("Players")[0]
@@ -43,7 +45,7 @@ func _ready():
 func generate_cave() -> void:
 	tilemap.clear()
 	random.randomize()
-	print("Generating cave with seed: " + str(random.seed))
+	#print("Generating cave with seed: " + str(random.seed))
 	for x in range(cave_width):
 		for y in range(9):
 			# Left-most wall
@@ -191,15 +193,20 @@ func place_ruby_at(x: int, y: int) -> void:
 func place_golem_at(cell_x: int, cell_y: int, golem_ore_type = Globals.OreType.RUBY) -> void:
 	var local_pos = tilemap.map_to_world(Vector2(cell_x, cell_y))
 	var spawn_pos = tilemap.to_global(local_pos)
-	var golem = Golem.instance()
+	var golem = GolemScene.instance()
 	golem.global_position = spawn_pos + Vector2(tilemap.cell_size.x / 2, tilemap.cell_size.y / 2)
 	add_child(golem)
 	golem.set_ore_type(golem_ore_type)
 	golem.connect("mine", self, "mine_at_position")
 
-func mine_at_position(pos: Vector2) -> void:
+func mine_at_position(pos: Vector2, source) -> void:
 	var cell_pos = tilemap.world_to_map(pos)
 	var cell_type = tilemap.get_cellv(cell_pos)
+	if cell_type != tiles_id["ground"] and cell_type != tiles_id["wall"]:
+		if source is Player:
+			player_mine_sound.play()
+		elif source is Golem:
+			golem_mine_sound.play()
 	# Non-ore cells
 	if cell_type == tiles_id["dirt_broken"]:
 		tilemap.set_cellv(cell_pos, tiles_id["ground"])

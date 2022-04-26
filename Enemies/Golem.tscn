@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Enemies/golem.png" type="Texture" id=1]
 [ext_resource path="res://Enemies/golem_sleep.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Enemies/GolemFSM.gd" type="Script" id=4]
 [ext_resource path="res://Enemies/golem_sapphire_sleep.png" type="Texture" id=5]
 [ext_resource path="res://Enemies/golem_sapphire.png" type="Texture" id=6]
+[ext_resource path="res://Audio/enemy_hit.wav" type="AudioStream" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5.5, 7 )
@@ -254,8 +255,13 @@ anims/RESET = SubResource( 9 )
 anims/ruby = SubResource( 8 )
 anims/sapphire = SubResource( 10 )
 
+[node name="HurtSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -3.0
+
 [connection signal="body_entered" from="PlayerDetectArea" to="." method="_on_PlayerDetectArea_body_entered"]
 [connection signal="body_exited" from="PlayerDetectArea" to="." method="_on_PlayerDetectArea_body_exited"]
 [connection signal="timeout" from="PlayerCheck" to="." method="_on_PlayerCheck_timeout"]
 [connection signal="timeout" from="DamageImmunity" to="." method="_on_ImmunityTimer_timeout"]
 [connection signal="timeout" from="MineTimer" to="." method="_on_MineTimer_timeout"]
+[connection signal="finished" from="HurtSound" to="." method="_on_HurtSound_finished"]
