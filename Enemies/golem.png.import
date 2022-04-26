@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/player_front.png-47ce404efef2b95f07b43f843ee62342.stex"
+path="res://.import/golem.png-11b7c5f8337cc70144c6bbb72d5a404e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/player_front.png"
-dest_files=[ "res://.import/player_front.png-47ce404efef2b95f07b43f843ee62342.stex" ]
+source_file="res://Enemies/golem.png"
+dest_files=[ "res://.import/golem.png-11b7c5f8337cc70144c6bbb72d5a404e.stex" ]
 
 [params]
 

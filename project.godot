@@ -93,6 +93,7 @@ main_action={
 2d_physics/layer_1="SOLID"
 2d_physics/layer_2="PLAYER"
 2d_physics/layer_3="ORES"
+2d_physics/layer_4="ENEMIES"
 
 [physics]
 
