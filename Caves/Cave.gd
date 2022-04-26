@@ -50,7 +50,7 @@ func generate_cave() -> void:
 	for x in range(cave_width):
 		for y in range(9):
 			# Left-most wall
-			if x == 0:
+			if x == 0 or x == cave_width - 1:
 				tilemap.set_cell(x, y, tiles_id["wall"])
 				continue
 			# Top and bottom walls

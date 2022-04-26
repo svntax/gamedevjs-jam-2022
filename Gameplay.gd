@@ -1,6 +1,7 @@
 extends Node2D
 
 onready var player = $Player
+onready var camera = $Player/Camera2D
 onready var cave = $Cave
 onready var score_label = $UILayer/Score
 onready var cave_music = $CaveMusic
@@ -17,6 +18,7 @@ func _ready():
 	player.connect("collected_ore", self, "update_score")
 	player.connect("died", self, "_on_player_death")
 	cave.generate_cave()
+	camera.limit_right = cave.cave_width * 16
 	
 	wallet_connection = WalletConnection.new(Near.near_connection)
 	if wallet_connection.is_signed_in():
