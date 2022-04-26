@@ -104,7 +104,10 @@ func generate_cave() -> void:
 				elif 61 <= x and x <= 80:
 					if choice <= 0.02:
 						tilemap.set_cell(x, y, tiles_id["ground"])
-						place_golem_at(x, y, Globals.OreType.RUBY)
+						var golem_type = Globals.OreType.RUBY
+						if random.randf() < 0.2:
+							golem_type = Globals.OreType.SAPPHIRE
+						place_golem_at(x, y, golem_type)
 					elif choice <= 0.65:
 						tilemap.set_cell(x, y, tiles_id["dirt"])
 					elif choice <= 0.8:
@@ -127,7 +130,10 @@ func generate_cave() -> void:
 						tilemap.set_cell(x, y, tiles_id["dirt"])
 					elif choice <= 0.63:
 						tilemap.set_cell(x, y, tiles_id["ground"])
-						place_golem_at(x, y, Globals.OreType.RUBY)
+						var golem_type = Globals.OreType.RUBY
+						if random.randf() < 0.5:
+							golem_type = Globals.OreType.SAPPHIRE
+						place_golem_at(x, y, golem_type)
 					elif choice <= 0.75:
 						place_stone_at(x, y)
 					elif choice <= 0.78:
@@ -144,7 +150,10 @@ func generate_cave() -> void:
 				else:
 					if choice <= 0.05:
 						tilemap.set_cell(x, y, tiles_id["ground"])
-						place_golem_at(x, y, Globals.OreType.RUBY)
+						var golem_type = Globals.OreType.RUBY
+						if random.randf() < 0.8:
+							golem_type = Globals.OreType.SAPPHIRE
+						place_golem_at(x, y, golem_type)
 					elif choice <= 0.5:
 						tilemap.set_cell(x, y, tiles_id["dirt"])
 					elif choice <= 0.7:
@@ -183,9 +192,9 @@ func place_golem_at(cell_x: int, cell_y: int, golem_ore_type = Globals.OreType.R
 	var local_pos = tilemap.map_to_world(Vector2(cell_x, cell_y))
 	var spawn_pos = tilemap.to_global(local_pos)
 	var golem = Golem.instance()
-	golem.golem_type = golem_ore_type
 	golem.global_position = spawn_pos + Vector2(tilemap.cell_size.x / 2, tilemap.cell_size.y / 2)
 	add_child(golem)
+	golem.set_ore_type(golem_ore_type)
 	golem.connect("mine", self, "mine_at_position")
 
 func mine_at_position(pos: Vector2) -> void:

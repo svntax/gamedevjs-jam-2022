@@ -2,9 +2,9 @@ extends KinematicBody2D
 
 #const GoldOre = preload("res://Ores/Gold.tscn")
 #const IronOre = preload("res://Ores/Iron.tscn")
-#const EmeraldOre = preload("res://Ores/Emerald.tscn")
+const EmeraldOre = preload("res://Ores/Emerald.tscn")
 const RubyOre = preload("res://Ores/Ruby.tscn")
-#const SapphireOre = preload("res://Ores/Sapphire.tscn")
+const SapphireOre = preload("res://Ores/Sapphire.tscn")
 
 signal mine(target_pos)
 
@@ -14,6 +14,7 @@ onready var animation_player = $AnimationPlayer
 onready var detect_area = $PlayerDetectArea
 onready var damage_immunity_timer = $DamageImmunity
 onready var mine_timer = $MineTimer
+onready var costume_player = $CostumePlayer
 
 onready var golem_type = Globals.OreType.RUBY
 
@@ -61,6 +62,15 @@ func damage() -> void:
 		else:
 			state_machine.set_state(state_machine.States.HURT)
 
+func set_ore_type(ore_type: int) -> void:
+	golem_type = ore_type
+	if golem_type == Globals.OreType.RUBY:
+		costume_player.play("ruby")
+		health = 3
+	elif golem_type == Globals.OreType.SAPPHIRE:
+		costume_player.play("sapphire")
+		health = 6
+
 func drop_loot() -> void:
 	if golem_type == Globals.OreType.RUBY:
 		# Drop 2 ruby ores to the left and right
@@ -72,6 +82,14 @@ func drop_loot() -> void:
 		get_parent().add_child(ore02)
 		if ore02.global_position.y == ore01.global_position.y:
 			ore02.global_position.y += 1
+	elif golem_type == Globals.OreType.SAPPHIRE:
+		# Drop 1 sapphire ore and emerald ore
+		var ore01 = SapphireOre.instance()
+		ore01.global_position = global_position
+		get_parent().add_child(ore01)
+		var ore02 = EmeraldOre.instance()
+		ore02.global_position = ore01.global_position + Vector2(randi() % 4 - 3, randi() % 5 - 2)
+		get_parent().add_child(ore02)
 
 func check_player_in_range() -> bool:
 	return player in detect_area.get_overlapping_bodies()

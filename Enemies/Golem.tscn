@@ -1,9 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Enemies/golem.png" type="Texture" id=1]
 [ext_resource path="res://Enemies/golem_sleep.png" type="Texture" id=2]
 [ext_resource path="res://Enemies/Golem.gd" type="Script" id=3]
 [ext_resource path="res://Enemies/GolemFSM.gd" type="Script" id=4]
+[ext_resource path="res://Enemies/golem_sapphire_sleep.png" type="Texture" id=5]
+[ext_resource path="res://Enemies/golem_sapphire.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5.5, 7 )
@@ -120,6 +122,89 @@ tracks/1/keys = {
 [sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 48, 42 )
 
+[sub_resource type="Animation" id=9]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/Standing:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ ExtResource( 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body/Sleep:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ ExtResource( 2 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "ruby"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/Standing:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body/Sleep:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 2 ) ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "sapphire"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/Standing:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 6 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body/Sleep:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 5 ) ]
+}
+
 [node name="Golem" type="KinematicBody2D" groups=["Golems"]]
 collision_layer = 8
 collision_mask = 3
@@ -163,6 +248,11 @@ one_shot = true
 
 [node name="MineTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="CostumePlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 9 )
+anims/ruby = SubResource( 8 )
+anims/sapphire = SubResource( 10 )
 
 [connection signal="body_entered" from="PlayerDetectArea" to="." method="_on_PlayerDetectArea_body_entered"]
 [connection signal="body_exited" from="PlayerDetectArea" to="." method="_on_PlayerDetectArea_body_exited"]
