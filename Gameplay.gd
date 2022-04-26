@@ -56,3 +56,10 @@ func _on_player_death():
 
 func _on_GameOverDelay_timeout():
 	animation_player.play("game_over")
+
+func _on_Exit_body_entered(body):
+	if body.has_method("leave"):
+		body.leave()
+		Globals.current_score *= 2
+		update_score()
+		_on_player_death()

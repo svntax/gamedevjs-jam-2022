@@ -100,6 +100,11 @@ func damage() -> void:
 		death_sound.play()
 		emit_signal("died")
 
+func leave() -> void:
+	alive = false
+	set_deferred("collision_layer", 0)
+	hide()
+
 func is_alive() -> bool:
 	return alive
 
