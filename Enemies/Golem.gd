@@ -21,7 +21,7 @@ onready var hurt_sound = $HurtSound
 onready var golem_type = Globals.OreType.RUBY
 
 onready var player = null
-onready var speed = 24
+onready var speed = 26
 onready var health = 3
 onready var velocity = Vector2()
 
@@ -42,7 +42,7 @@ func _on_PlayerDetectArea_body_exited(body):
 
 func walk_towards_player() -> void:
 	var dir = global_position.direction_to(player.global_position)
-	velocity = dir * 32
+	velocity = dir * speed
 	if velocity.x >= 1:
 		body_root.scale.x = 1
 	elif velocity.x <= -1:

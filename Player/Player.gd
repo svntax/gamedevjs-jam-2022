@@ -4,11 +4,15 @@ class_name Player
 signal mine(target_pos, source)
 signal collected_ore()
 
+const BASE_SPEED = 56
 onready var speed = 56
 onready var x_direction = 1 # 1 = right, -1 = left
 onready var y_direction = 0 # 1 = down, -1 = up
 onready var direction = Vector2(x_direction, y_direction)
 onready var alive = true
+# Debug vars
+onready var original_collision_layer = collision_layer
+onready var original_collision_mask = collision_mask
 
 onready var pickaxe = $Pickaxe
 onready var sprite = $Sprite
@@ -66,9 +70,14 @@ func _process(_delta):
 			golem.queue_free()
 		get_parent().get_node("Cave").generate_cave()
 	if Input.is_action_just_pressed("debug_toggle"):
-		collision_layer = 0
-		collision_mask = 0
-		speed = 200
+		if collision_layer == 0:
+			collision_layer = original_collision_layer
+			collision_mask = original_collision_mask
+			speed = BASE_SPEED
+		else:
+			collision_layer = 0
+			collision_mask = 0
+			speed = 200
 
 func _on_MoveCooldown_timeout():
 	# Unused for now

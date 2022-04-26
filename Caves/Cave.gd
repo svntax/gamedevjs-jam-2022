@@ -71,7 +71,7 @@ func generate_cave() -> void:
 					continue
 				# First layer: dirt, stone, gold, iron
 				var choice = random.randf()
-				if 11 <= x and x <= 20:
+				if 11 <= x and x <= 35:
 					if choice <= 0.01: # Spawn golem
 						tilemap.set_cell(x, y, tiles_id["ground"])
 						place_golem_at(x, y, Globals.OreType.RUBY)
@@ -86,7 +86,7 @@ func generate_cave() -> void:
 					else:
 						place_stone_at(x, y)
 				# Second layer: dirt, stone, gold, iron, emerald
-				elif 21 <= x and x <= 60:
+				elif 36 <= x and x <= 60:
 					if choice <= 0.02:
 						tilemap.set_cell(x, y, tiles_id["ground"])
 						place_golem_at(x, y, Globals.OreType.RUBY)
@@ -103,7 +103,7 @@ func generate_cave() -> void:
 					else:
 						tilemap.set_cell(x, y, tiles_id["ground"])
 				# Third layer: dirt, stone, gold, iron, emerald, ruby
-				elif 61 <= x and x <= 80:
+				elif 61 <= x and x <= 85:
 					if choice <= 0.02:
 						tilemap.set_cell(x, y, tiles_id["ground"])
 						var golem_type = Globals.OreType.RUBY
@@ -125,7 +125,7 @@ func generate_cave() -> void:
 					else:
 						tilemap.set_cell(x, y, tiles_id["ground"])
 				# Fourth layer: all tile types
-				elif 81 <= x and x <= 100:
+				elif 85 <= x and x <= 110:
 					if choice <= 0.03:
 						tilemap.set_cell(x, y, tiles_id["sapphire01"])
 					elif choice <= 0.6:
