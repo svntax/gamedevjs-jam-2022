@@ -1,7 +1,7 @@
 extends "res://StateMachine.gd"
 
 # States: IDLE, WALK, PUSHED
-enum States {SLEEP, IDLE, WALK}
+enum States {SLEEP, IDLE, WALK, HURT}
 
 func _ready():
 	call_deferred("set_state", States.SLEEP)
@@ -29,5 +29,7 @@ func _enter_state(new_state, old_state):
 				actor.animation_player.play("wake_up")
 		States.SLEEP:
 			actor.animation_player.play("sleep")
+		States.HURT:
+			actor.animation_player.play("hurt")
 		States.WALK:
 			pass # TODO: walking animation?

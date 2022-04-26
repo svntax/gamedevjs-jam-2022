@@ -5,9 +5,9 @@ signal mine(target_pos)
 signal collected_ore()
 
 onready var speed = 56
-onready var x_direction = 0 # 1 = right, -1 = left
-onready var y_direction = 1 # 1 = down, -1 = up
-onready var direction = Vector2(0, 1)
+onready var x_direction = 1 # 1 = right, -1 = left
+onready var y_direction = 0 # 1 = down, -1 = up
+onready var direction = Vector2(x_direction, y_direction)
 onready var alive = true
 
 onready var pickaxe = $Pickaxe
@@ -15,7 +15,10 @@ onready var sprite = $Sprite
 onready var animation_player = $AnimationPlayer
 onready var move_cooldown_timer = $MoveCooldownTimer
 
-func _physics_process(delta):
+func _ready():
+	pickaxe.hide()
+
+func _physics_process(_delta):
 	var velocity = Input.get_vector("move_left", "move_right", "move_up", "move_down") * speed
 	x_direction = sign(velocity.x)
 	if x_direction == 1:
@@ -36,13 +39,14 @@ func _can_move() -> bool:
 		return false
 	return is_alive()
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("main_action"):
 		var mine_pos = global_position + direction * 16
 		pickaxe.global_position = mine_pos
 		animation_player.stop()
 		animation_player.play("mine")
 		move_cooldown_timer.start()
+		pickaxe.hit()
 		emit_signal("mine", mine_pos)
 	# TODO: debug, remove later
 	if Input.is_action_just_pressed("ui_focus_next"):

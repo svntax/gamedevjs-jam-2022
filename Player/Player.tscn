@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/player.png" type="Texture" id=2]
-[ext_resource path="res://icon.png" type="Texture" id=3]
+[ext_resource path="res://Player/Pickaxe.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 7 )
@@ -18,7 +18,7 @@ tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
+"update": 1,
 "values": [ false ]
 }
 
@@ -49,18 +49,16 @@ shape = SubResource( 1 )
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 
-[node name="Pickaxe" type="Sprite" parent="."]
+[node name="Pickaxe" parent="." instance=ExtResource( 3 )]
 visible = false
-position = Vector2( 11, 0 )
-scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 3 )
+position = Vector2( 12, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 2 )
 anims/mine = SubResource( 3 )
 
 [node name="MoveCooldownTimer" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.2
 one_shot = true
 
 [connection signal="timeout" from="MoveCooldownTimer" to="." method="_on_MoveCooldown_timeout"]

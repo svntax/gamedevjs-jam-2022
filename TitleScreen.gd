@@ -31,10 +31,10 @@ func _ready():
 	if wallet_connection.is_signed_in():
 		_on_user_signed_in(wallet_connection)
 
-func _on_user_signed_in(wallet: WalletConnection):
+func _on_user_signed_in(_wallet: WalletConnection):
 	login_button.set_text("Sign Out")
 
-func _on_user_signed_out(wallet: WalletConnection):
+func _on_user_signed_out(_wallet: WalletConnection):
 	login_button.set_text("Sign In")
 
 func _on_PlayButton_pressed():

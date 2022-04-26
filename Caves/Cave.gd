@@ -2,11 +2,11 @@ extends Node2D
 
 export (int, 0, 5000) var cave_width = 64
 
-var GoldOre = load("res://Ores/Gold.tscn")
-var IronOre = load("res://Ores/Iron.tscn")
-var EmeraldOre = load("res://Ores/Emerald.tscn")
-var RubyOre = load("res://Ores/Ruby.tscn")
-var SapphireOre = load("res://Ores/Sapphire.tscn")
+const GoldOre = preload("res://Ores/Gold.tscn")
+const IronOre = preload("res://Ores/Iron.tscn")
+const EmeraldOre = preload("res://Ores/Emerald.tscn")
+const RubyOre = preload("res://Ores/Ruby.tscn")
+const SapphireOre = preload("res://Ores/Sapphire.tscn")
 
 onready var tiles_id = {
 	"wall": -1,
