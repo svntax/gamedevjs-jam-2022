@@ -71,19 +71,15 @@ func _process(_delta):
 			pickaxe.hit()
 			emit_signal("mine", mine_pos, self)
 	# TODO: debug, remove later
-	if Input.is_action_just_pressed("ui_focus_next"):
-		for golem in get_tree().get_nodes_in_group("Golems"):
-			golem.queue_free()
-		get_parent().get_node("Cave").generate_cave()
-	if Input.is_action_just_pressed("debug_toggle"):
-		if collision_layer == 0:
-			collision_layer = original_collision_layer
-			collision_mask = original_collision_mask
-			speed = BASE_SPEED
-		else:
-			collision_layer = 0
-			collision_mask = 0
-			speed = 200
+#	if Input.is_action_just_pressed("debug_toggle") and not Globals.challenge_mode:
+#		if collision_layer == 0:
+#			collision_layer = original_collision_layer
+#			collision_mask = original_collision_mask
+#			speed = BASE_SPEED
+#		else:
+#			collision_layer = 0
+#			collision_mask = 0
+#			speed = 200
 
 func _on_MoveCooldown_timeout():
 	# Unused for now

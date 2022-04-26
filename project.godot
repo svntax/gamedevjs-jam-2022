@@ -38,9 +38,9 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Gamedevjs2022"
+config/name="GolemCaves"
 run/main_scene="res://TitleScreen.tscn"
-config/icon="res://icon.png"
+config/icon="res://game_icon.png"
 
 [autoload]
 
