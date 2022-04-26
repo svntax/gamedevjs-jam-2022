@@ -31,7 +31,7 @@ func _ready():
 		for i in high_scores.size() - 1:
 			var indexOfLargest = i
 			for j in range(i+1, high_scores.size()):
-				if high_scores[j].value > high_scores[indexOfLargest].value:
+				if high_scores[j][1] > high_scores[indexOfLargest][1]:
 					indexOfLargest = j
 			if indexOfLargest != i:
 				# Swap

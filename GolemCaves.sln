@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamedevjs2022", "Gamedevjs2022.csproj", "{AC62A66F-657F-4DDC-A819-528CE080A15A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GolemCaves", "GolemCaves.csproj", "{AC62A66F-657F-4DDC-A819-528CE080A15A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
