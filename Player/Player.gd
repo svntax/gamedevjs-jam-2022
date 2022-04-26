@@ -51,6 +51,10 @@ func _process(_delta):
 	# TODO: debug, remove later
 	if Input.is_action_just_pressed("ui_focus_next"):
 		get_parent().get_node("Cave").generate_cave()
+	if Input.is_action_just_pressed("debug_toggle"):
+		collision_layer = 0
+		collision_mask = 0
+		speed = 200
 
 func _on_MoveCooldown_timeout():
 	# Unused for now
