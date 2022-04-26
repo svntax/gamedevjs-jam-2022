@@ -39,15 +39,19 @@ func _can_move() -> bool:
 		return false
 	return is_alive()
 
+func _can_mine() -> bool:
+	return is_alive()
+
 func _process(_delta):
 	if Input.is_action_just_pressed("main_action"):
-		var mine_pos = global_position + direction * 16
-		pickaxe.global_position = mine_pos
-		animation_player.stop()
-		animation_player.play("mine")
-		move_cooldown_timer.start()
-		pickaxe.hit()
-		emit_signal("mine", mine_pos)
+		if _can_mine():
+			var mine_pos = global_position + direction * 16
+			pickaxe.global_position = mine_pos
+			animation_player.stop()
+			animation_player.play("mine")
+			move_cooldown_timer.start()
+			pickaxe.hit()
+			emit_signal("mine", mine_pos)
 	# TODO: debug, remove later
 	if Input.is_action_just_pressed("ui_focus_next"):
 		get_parent().get_node("Cave").generate_cave()

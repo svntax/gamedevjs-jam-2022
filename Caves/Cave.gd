@@ -29,6 +29,9 @@ func _ready():
 	var player = get_tree().get_nodes_in_group("Players")[0]
 	player.connect("mine", self, "mine_at_position")
 	
+	for golem in get_tree().get_nodes_in_group("Golems"):
+		golem.connect("mine", self, "mine_at_position")
+	
 	# Set up dictionary for tile id's
 	for key in tiles_id.keys():
 		tiles_id[key] = tilemap.tile_set.find_tile_by_name(key)

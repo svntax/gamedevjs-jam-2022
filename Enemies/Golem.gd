@@ -6,11 +6,14 @@ extends KinematicBody2D
 const RubyOre = preload("res://Ores/Ruby.tscn")
 #const SapphireOre = preload("res://Ores/Sapphire.tscn")
 
+signal mine(target_pos)
+
 onready var body_root = $Body
 onready var state_machine = $StateMachine
 onready var animation_player = $AnimationPlayer
 onready var detect_area = $PlayerDetectArea
 onready var damage_immunity_timer = $DamageImmunity
+onready var mine_timer = $MineTimer
 
 enum GolemType {RUBY}
 onready var golem_type = GolemType.RUBY
@@ -18,6 +21,7 @@ onready var golem_type = GolemType.RUBY
 onready var player = null
 onready var speed = 24
 onready var health = 3
+onready var velocity = Vector2()
 
 func _ready():
 	player = get_tree().get_nodes_in_group("Players")[0]
@@ -34,12 +38,12 @@ func _on_PlayerDetectArea_body_exited(body):
 
 func walk_towards_player() -> void:
 	var dir = global_position.direction_to(player.global_position)
-	var vel = dir * 32
-	if vel.x >= 1:
+	velocity = dir * 32
+	if velocity.x >= 1:
 		body_root.scale.x = 1
-	elif vel.x <= -1:
+	elif velocity.x <= -1:
 		body_root.scale.x = -1
-	move_and_slide(vel)
+	move_and_slide(velocity)
 	for i in range(get_slide_count()):
 		var collision = get_slide_collision(i)
 		var collider = collision.collider
@@ -79,3 +83,17 @@ func _on_PlayerCheck_timeout():
 func _on_ImmunityTimer_timeout():
 	if state_machine.state == state_machine.States.HURT:
 		state_machine.set_state(state_machine.States.IDLE)
+
+func _on_MineTimer_timeout():
+	if state_machine.state == state_machine.States.WALK:
+		mine_timer.start()
+		mine()
+
+func mine() -> void:
+	var mine_dir = Vector2()
+	if abs(velocity.x) > abs(velocity.y):
+		mine_dir.x = velocity.x
+	else:
+		mine_dir.y = velocity.y
+	var mine_pos = global_position + mine_dir.normalized() * 16
+	emit_signal("mine", mine_pos)

@@ -32,4 +32,5 @@ func _enter_state(new_state, old_state):
 		States.HURT:
 			actor.animation_player.play("hurt")
 		States.WALK:
+			actor.mine_timer.start()
 			pass # TODO: walking animation?

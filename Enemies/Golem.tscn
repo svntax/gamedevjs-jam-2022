@@ -117,10 +117,10 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 32, 32 )
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 48, 42 )
 
-[node name="Golem" type="KinematicBody2D"]
+[node name="Golem" type="KinematicBody2D" groups=["Golems"]]
 collision_layer = 8
 collision_mask = 3
 script = ExtResource( 3 )
@@ -152,7 +152,7 @@ collision_layer = 8
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectArea"]
-shape = SubResource( 5 )
+shape = SubResource( 7 )
 
 [node name="PlayerCheck" type="Timer" parent="."]
 one_shot = true
@@ -161,7 +161,11 @@ one_shot = true
 wait_time = 0.5
 one_shot = true
 
+[node name="MineTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="body_entered" from="PlayerDetectArea" to="." method="_on_PlayerDetectArea_body_entered"]
 [connection signal="body_exited" from="PlayerDetectArea" to="." method="_on_PlayerDetectArea_body_exited"]
 [connection signal="timeout" from="PlayerCheck" to="." method="_on_PlayerCheck_timeout"]
 [connection signal="timeout" from="DamageImmunity" to="." method="_on_ImmunityTimer_timeout"]
+[connection signal="timeout" from="MineTimer" to="." method="_on_MineTimer_timeout"]
