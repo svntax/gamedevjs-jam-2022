@@ -46,10 +46,10 @@ align = 1
 
 [node name="NextButton" type="Button" parent="."]
 margin_left = 104.0
-margin_top = 85.0
+margin_top = 87.0
 margin_right = 152.0
-margin_bottom = 103.0
+margin_bottom = 105.0
 rect_min_size = Vector2( 0, 18 )
-text = "Next"
+text = "Go back"
 
 [connection signal="pressed" from="NextButton" to="." method="_on_NextButton_pressed"]

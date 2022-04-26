@@ -42,7 +42,10 @@ func _ready():
 
 func generate_cave() -> void:
 	tilemap.clear()
-	random.randomize()
+	if Globals.challenge_mode:
+		random.seed = Globals.challenge_mode_seed
+	else:
+		random.randomize()
 	#print("Generating cave with seed: " + str(random.seed))
 	for x in range(cave_width):
 		for y in range(9):

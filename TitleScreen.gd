@@ -20,6 +20,7 @@ func _ready():
 	OS.set_window_position(screen_size*0.5 - window_size*0.5)
 	
 	Globals.current_score = 0
+	Globals.challenge_mode = false
 	play_button.grab_focus()
 	
 	# NEAR setup
@@ -42,8 +43,7 @@ func _on_PlayButton_pressed():
 	get_tree().change_scene("res://Gameplay.tscn")
 
 func _on_ChallengeButton_pressed():
-	# TODO challenge screen
-	pass
+	get_tree().change_scene("res://ChallengeScreen.tscn")
 
 func _on_LeaderboardsButton_pressed():
 	get_tree().change_scene("res://LeaderboardScreen.tscn")
