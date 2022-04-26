@@ -39,8 +39,6 @@ func _ready():
 	for key in tiles_id.keys():
 		tiles_id[key] = tilemap.tile_set.find_tile_by_name(key)
 		assert(tiles_id[key] != -1)
-	
-	generate_cave()
 
 func generate_cave() -> void:
 	tilemap.clear()

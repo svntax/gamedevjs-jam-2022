@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui_theme.tres" type="Theme" id=1]
+[ext_resource path="res://Menus/GameOverMenu.gd" type="Script" id=2]
+
+[node name="GameOverMenu" type="Control"]
+margin_right = 256.0
+margin_bottom = 144.0
+mouse_filter = 1
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="BorderRect" type="ReferenceRect" parent="."]
+margin_left = 80.0
+margin_top = 32.0
+margin_right = 176.0
+margin_bottom = 112.0
+mouse_filter = 2
+border_color = Color( 0.258824, 0.129412, 0.211765, 1 )
+border_width = 4.0
+editor_only = false
+
+[node name="Bg" type="ColorRect" parent="."]
+margin_left = 80.0
+margin_top = 32.0
+margin_right = 176.0
+margin_bottom = 112.0
+mouse_filter = 2
+color = Color( 0.494118, 0.145098, 0.32549, 1 )
+
+[node name="Header" type="Label" parent="."]
+margin_left = 80.0
+margin_top = 36.0
+margin_right = 176.0
+margin_bottom = 49.0
+text = "Game Over"
+align = 1
+
+[node name="ScoreLabel" type="Label" parent="."]
+margin_left = 80.0
+margin_top = 63.0
+margin_right = 176.0
+margin_bottom = 76.0
+text = "Score: 12345"
+align = 1
+
+[node name="NextButton" type="Button" parent="."]
+margin_left = 104.0
+margin_top = 85.0
+margin_right = 152.0
+margin_bottom = 103.0
+rect_min_size = Vector2( 0, 18 )
+text = "Next"
+
+[connection signal="pressed" from="NextButton" to="." method="_on_NextButton_pressed"]

@@ -3,6 +3,7 @@ class_name Player
 
 signal mine(target_pos, source)
 signal collected_ore()
+signal died()
 
 const BASE_SPEED = 56
 onready var speed = 56
@@ -39,6 +40,11 @@ func _physics_process(_delta):
 			direction.y = 0
 	if _can_move():
 		move_and_slide(velocity)
+		for i in range(get_slide_count()):
+			var collision = get_slide_collision(i)
+			var collider = collision.collider
+			if collider is Golem:
+				self.damage()
 
 func _can_move() -> bool:
 	if not move_cooldown_timer.is_stopped():
@@ -84,10 +90,12 @@ func _on_MoveCooldown_timeout():
 	pass
 
 func damage() -> void:
-	alive = false
-	set_deferred("collision_layer", 0)
-	hide()
-	death_sound.play()
+	if alive:
+		alive = false
+		set_deferred("collision_layer", 0)
+		hide()
+		death_sound.play()
+		emit_signal("died")
 
 func is_alive() -> bool:
 	return alive

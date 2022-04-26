@@ -19,6 +19,7 @@ func _ready():
 	var window_size = OS.get_window_size()
 	OS.set_window_position(screen_size*0.5 - window_size*0.5)
 	
+	Globals.current_score = 0
 	play_button.grab_focus()
 	
 	# NEAR setup
