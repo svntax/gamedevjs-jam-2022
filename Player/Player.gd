@@ -40,16 +40,22 @@ func _can_move() -> bool:
 	return is_alive()
 
 func _can_mine() -> bool:
+	if animation_player.is_playing() and animation_player.current_animation == "mine":
+		return false
 	return is_alive()
 
 func _process(_delta):
 	if Input.is_action_just_pressed("main_action"):
 		if _can_mine():
-			var mine_pos = global_position + direction * 16
+			var mine_pos = global_position + direction * 12
 			pickaxe.global_position = mine_pos
 			animation_player.stop()
 			animation_player.play("mine")
 			move_cooldown_timer.start()
+			if sprite.scale.x == 1:
+				pickaxe.face_right()
+			elif sprite.scale.x == -1:
+				pickaxe.face_left()
 			pickaxe.hit()
 			emit_signal("mine", mine_pos)
 	# TODO: debug, remove later

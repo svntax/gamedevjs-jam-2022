@@ -24,7 +24,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=3]
 resource_name = "mine"
-length = 0.2
+length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pickaxe:visible")
 tracks/0/interp = 1
@@ -32,7 +32,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2 ),
+"times": PoolRealArray( 0, 0.3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
@@ -58,7 +58,7 @@ anims/RESET = SubResource( 2 )
 anims/mine = SubResource( 3 )
 
 [node name="MoveCooldownTimer" type="Timer" parent="."]
-wait_time = 0.25
+wait_time = 0.2
 one_shot = true
 
 [connection signal="timeout" from="MoveCooldownTimer" to="." method="_on_MoveCooldown_timeout"]
